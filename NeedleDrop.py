@@ -34,11 +34,11 @@ import easygui
 fileArray = []
 mp3Array = []
 choices = []
+directory = ""
 
 def chooseDirectory():
     directory = easygui.diropenbox("Choose Music Folder", "NeedleDrop") + "\\"
-    print(directory)
-    return os.listdir(directory)
+
 
 ###################################################################
 # 3. SETUP WITH SUPPLIED FILES
@@ -49,14 +49,15 @@ def chooseDirectory():
 ###################################################################
 
 # Make a list of all the valid mp3 files available
-def makeMp3Array():
+def getMp3s():
     for i in range(0, len(fileArray) - 1):
-        print(i)
+        print(directory + fileArray[i])
         try:
             if auto.File(fileArray[i]).valid:
-                mp3Array.append(fileArray[i])
+                mp3Array.append(directory + fileArray[i])
                 print("Added file to array")
         except:
+            print("uh oh")
             # This is only if the file has permission errors
             pass
 
@@ -65,6 +66,7 @@ def chooseSongs():
 	choices = []
 	choices = easygui.multchoicebox(msg="Select the songs you would like to study.", title="NeedleDrop", choices=mp3Array)
 
+# Select a random song
 def chooseRandomSong(songMax):
 	randomSong = random.randrange(songMax) 
 	return randomSong
@@ -87,13 +89,20 @@ def chooseRandomTime(timeMax):
 # 6. TESTING
 ###################################################################
 
-chooseDirectory()
-print(fileArray[1])
-#makeMp3Array()
-#chooseSongs()
 
-for i in mp3Array:
-    print(i)
+makeMp3Array()
+
+
+
+
+
+    #return os.listdir(directory)
+
+
+
+
+
+#chooseSongs()
 #randomSong = choices[chooseRandomSong(len(choices))]
 #print("Now playing " + randomSong)
 
