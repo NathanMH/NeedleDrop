@@ -8,11 +8,9 @@ Author: Nathan Mador-House
 """####################
 Index:
     1. Imports and Readme
-    2. Initialization Functions
-    3. Setup with supplied files
-    4. General Functions
-    5. Mai
-    6. Testing
+    2. Functions
+    3. Main
+    4. Testing
 ####################"""
 #######################
 
@@ -21,63 +19,55 @@ Index:
 ###################################################################
 
 import os
-import sys
 import random
-
-from hsaudiotag import auto
+# from hsaudiotag import auto
 import easygui
 
 ###################################################################
-# 2. INITIALIZATION FUNCTIONS
+# 2. FUNCTIONS
 ###################################################################
 
-fileArray = []
-mp3Array = []
-choices = []
-directory = ""
+def user_choose_directory():
+    """ Get root directory from user """
+    return os.listdir(easygui.diropenbox("Choose Music Folder", "NeedleDrop"))
 
-def chooseDirectory():
-    directory = easygui.diropenbox("Choose Music Folder", "NeedleDrop") + "\\"
-
-
-###################################################################
-# 3. SETUP WITH SUPPLIED FILES
-###################################################################
-
-###################################################################
-# 4. GENERAL FUNCTIONS
-###################################################################
-
-# Make a list of all the valid mp3 files available
-def getMp3s():
-    for i in range(0, len(fileArray) - 1):
-        print(directory + fileArray[i])
+def get_all_mp3s(files):
+    """ Make a list of all the valid mp3 files available """
+    mp3_list = []
+    for i in range(0, len(files) - 1):
+        print(files[i])
         try:
-            if auto.File(fileArray[i]).valid:
-                mp3Array.append(directory + fileArray[i])
+            if auto.File(files[i]).valid:
+                mp3_list.append(directory + fileArray[i])
                 print("Added file to array")
         except:
             print("uh oh")
             # This is only if the file has permission errors
-            pass
+    return mp3_list
 
 # Get user to choose which mp3 files will be randomized
-def chooseSongs():
-	choices = []
-	choices = easygui.multchoicebox(msg="Select the songs you would like to study.", title="NeedleDrop", choices=mp3Array)
+def user_choose_songs(song_list):
+    """ User selects songs """
+    return easygui.multchoicebox(msg="Select the songs you would like to study.",\
+                                 title="NeedleDrop", choices=song_list)
 
 # Select a random song
-def chooseRandomSong(songMax):
-	randomSong = random.randrange(songMax) 
-	return randomSong
+def get_random_song(songlist):
+    """ Get random song from user selected list """
+    return random.randrange(limit)
 
 # Randomly selects a start time
-def chooseRandomTime(timeMax):
-	if timeMax > 60:
-		randomTime = random.randrange(timeMax - 60)
-	else:
-		randomTime = random.randrange(timeMax)
-	return randomTime 
+def choose_random_time(song_length):
+    """ Get a random time from a song """
+    if limit > 60:
+        time = random.randrange(limit - 60)
+    else:
+        time = random.randrange(limit)
+        return time
+
+def play_song_at_time(songnumber, songlist):
+    # vlc.play(songlist[songnumber])
+    pass
 
 
 
@@ -89,8 +79,19 @@ def chooseRandomTime(timeMax):
 # 6. TESTING
 ###################################################################
 
+# 1. directory
+# 2. list of mp3s
+# 3. user chooses mp3s
+# 4. random song from user selected
+# 5. random time
+# 6. play song at random time
 
-makeMp3Array()
+
+def test():
+    """"""
+    song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
+    time = 
+
 
 
 
