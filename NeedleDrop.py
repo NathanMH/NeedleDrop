@@ -63,7 +63,7 @@ def choose_random_time(song_length):
         time = random.randrange(limit - 60)
     else:
         time = random.randrange(limit)
-        return time
+    return time
 
 def play_song_at_time(songnumber, songlist):
     # vlc.play(songlist[songnumber])
@@ -90,7 +90,7 @@ def play_song_at_time(songnumber, songlist):
 def test():
     """"""
     song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
-    time = 
+    time = choose_random_time(200)
 
 
 
