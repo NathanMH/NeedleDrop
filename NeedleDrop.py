@@ -89,32 +89,15 @@ def play_song_at_time(songnumber, songlist):
 
 def test():
     """"""
-    song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
-    time = choose_random_time(200)
+    #song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
+    #time = choose_random_time(200)
+    chosen_directory = user_choose_directory()
+    list_of_all_mp3s = get_all_mp3s(chosen_directory)
+    list_of_user_chosen_mp3s = user_choose_songs()
+    random_mp3 = get_random_song()
 
-
-
-
+    print(directory)
 
 
     #return os.listdir(directory)
-
-
-
-
-
-#chooseSongs()
-#randomSong = choices[chooseRandomSong(len(choices))]
-#print("Now playing " + randomSong)
-
-#randomSong = mp3Array[chooseRandomSong(len(mp3Array))]
-#randomTime = chooseRandomTime(auto.File(randomSong).duration)
-
-#playable = repr(randomSong)
-
-# Play music
-#os.system("mplayer "+ directory + playable + " -ss " + str(randomTime))
-
-#print(playable)
-
 

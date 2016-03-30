@@ -6,6 +6,7 @@ ehthumbs.db
 Desktop.ini
 hsaudiotag/
 easygui.py
+__init__.py
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
