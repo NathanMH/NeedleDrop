@@ -22,6 +22,7 @@ import os
 import random
 # from hsaudiotag import auto
 import easygui
+import sndhdr
 
 ###################################################################
 # 2. FUNCTIONS
@@ -36,12 +37,14 @@ def get_all_mp3s(files):
     mp3_list = []
     for i in range(0, len(files) - 1):
         print(files[i])
-        try:
-            if auto.File(files[i]).valid:
-                mp3_list.append(directory + fileArray[i])
-                print("Added file to array")
-        except:
-            print("uh oh")
+        file_info = sndhdr.what(test_directory + "/" + files[i])
+        print(file_info[0])
+        # try:
+        #     if auto.File(files[i]).valid:
+        #         mp3_list.append(directory + fileArray[i])
+        #         print("Added file to array")
+        # except:
+        #     print("uh oh")
             # This is only if the file has permission errors
     return mp3_list
 
@@ -79,6 +82,10 @@ def play_song_at_time(songnumber, songlist):
 # 6. TESTING
 ###################################################################
 
+test_directory = "/home/musicnate/Music/favs"
+test_directory_files = os.listdir(test_directory)
+
+
 # 1. directory
 # 2. list of mp3s
 # 3. user chooses mp3s
@@ -91,13 +98,16 @@ def test():
     """"""
     #song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
     #time = choose_random_time(200)
-    chosen_directory = user_choose_directory()
-    list_of_all_mp3s = get_all_mp3s(chosen_directory)
-    list_of_user_chosen_mp3s = user_choose_songs()
-    random_mp3 = get_random_song()
 
-    print(directory)
+    #chosen_directory = user_choose_directory()
+    list_of_all_mp3s = get_all_mp3s(test_directory_files)
+    #list_of_user_chosen_mp3s = user_choose_songs()
+    #random_mp3 = get_random_song()
 
+    print(test_directory)
 
+test_file_info = sndhdr.what("/home/musicnate/Music/favs/20. Signals.mp3")
+print(test_file_info[0])
+test()
     #return os.listdir(directory)
 
