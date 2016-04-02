@@ -19,10 +19,11 @@ Index:
 ###################################################################
 
 import os
+import sys
 import random
-# from hsaudiotag import auto
 import easygui
 import sndhdr
+from mutagen.mp3 import MP3
 
 ###################################################################
 # 2. FUNCTIONS
@@ -30,22 +31,19 @@ import sndhdr
 
 def user_choose_directory():
     """ Get root directory from user """
-    return os.listdir(easygui.diropenbox("Choose Music Folder", "NeedleDrop"))
+    return easygui.diropenbox("Choose Music Folder", "NeedleDrop")
 
-def get_all_mp3s(files):
+def get_all_mp3s(location, files):
     """ Make a list of all the valid mp3 files available """
     mp3_list = []
     for i in range(0, len(files) - 1):
         print(files[i])
-        file_info = sndhdr.what(test_directory + "/" + files[i])
-        print(file_info[0])
-        # try:
-        #     if auto.File(files[i]).valid:
-        #         mp3_list.append(directory + fileArray[i])
-        #         print("Added file to array")
-        # except:
-        #     print("uh oh")
-            # This is only if the file has permission errors
+        if files[i].lower().endswith(".mp3"):
+            mp3_list.append(files[i])
+        elif sndhdr.what(location + files[i]) != None:
+            mp3_list.append(files[i])
+        else:
+            print("uh oh")
     return mp3_list
 
 # Get user to choose which mp3 files will be randomized
@@ -57,7 +55,7 @@ def user_choose_songs(song_list):
 # Select a random song
 def get_random_song(songlist):
     """ Get random song from user selected list """
-    return random.randrange(limit)
+    return random.randrange(len(songlist))
 
 # Randomly selects a start time
 def choose_random_time(song_length):
@@ -72,8 +70,6 @@ def play_song_at_time(songnumber, songlist):
     # vlc.play(songlist[songnumber])
     pass
 
-
-
 ###################################################################
 # 5. MAIN
 ###################################################################
@@ -84,30 +80,45 @@ def play_song_at_time(songnumber, songlist):
 
 test_directory = "/home/musicnate/Music/favs"
 test_directory_files = os.listdir(test_directory)
+test_song_path = "/home/musicnate/Music/favs/20. Signals.mp3"
 
 
-# 1. directory
-# 2. list of mp3s
-# 3. user chooses mp3s
-# 4. random song from user selected
-# 5. random time
-# 6. play song at random time
+### 1. User chooses directory
+# user_directory_choice = user_choose_directory()
+
+### 2. Get list of files from directory 
+# list_of_files = os.listdir(user_directory_choice)
+
+### 3. Filter list for mp3s
+# list_of_mp3s = get_all_mp3s(user_directory_choice, list_of_files)
+
+### 4. User chooses mp3s
+# list_of_user_chosen_mp3s = user_choose_songs(list_of_mp3s)
+
+### 5. Random song from user selected
+# random_mp3 = get_random_song(list_of_user_chosen_mp3s)
+
+### 6. Random time
+# random_time = choose_random_time(200)
+
+### 7. Make a system readable string
+# system_string = "vlc" + user_directory_choice + random_mp3
+
+### 8. Play song at random time
+# os.system(system_string)
 
 
 def test():
-    """"""
-    #song = get_random_song(user_choose_songs(get_all_mp3s(user_choose_directory())))
-    #time = choose_random_time(200)
 
-    #chosen_directory = user_choose_directory()
-    list_of_all_mp3s = get_all_mp3s(test_directory_files)
-    #list_of_user_chosen_mp3s = user_choose_songs()
-    #random_mp3 = get_random_song()
+    user_directory_choice = test_directory
+    list_of_files = os.listdir(user_directory_choice)
+    list_of_mp3s = get_all_mp3s(user_directory_choice, list_of_files)
+    list_of_user_chosen_mp3s = user_choose_songs(list_of_mp3s)
+    random_mp3 = get_random_song(list_of_user_chosen_mp3s)
 
-    print(test_directory)
-
-test_file_info = sndhdr.what("/home/musicnate/Music/favs/20. Signals.mp3")
-print(test_file_info[0])
 test()
-    #return os.listdir(directory)
+
+#audio = MP3(test_song_path)
+#print(audio.info.length)
+
 
