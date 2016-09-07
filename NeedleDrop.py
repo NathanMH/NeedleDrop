@@ -37,7 +37,7 @@ def gui_choose_directory():
     return easygui.diropenbox("Choose Music Folder", "NeedleDrop")
 
 
-def get_all_mp3s(location, files):
+def get_all_songs(location, files):
     """ Make a list of all the valid mp3 files available from directory """
     mp3_list = []
     for i in range(0, len(files) - 1):
@@ -59,7 +59,7 @@ def gui_choose_songs(song_list):
 # Select a random song
 def get_random_song(song_list):
     """ Get random song from user selected list """
-    return random.randrange(len(songlist))
+    return random.randrange(len(song_list))
 
 
 # Randomly selects a start time
@@ -101,11 +101,9 @@ def play_song_at_time(songnumber, songlist):
 
 def windows_test():
     test_directory = "C:/Users/Nathan Mador-House/Music/*.mp3"
-    test_mp3_list = glob.glob(test_directory)
-    test_list_of_user_chosen_mp3s = gui_choose_songs(test_mp3_list) ###### USE PREMADE SELECTION ######
-
-    for i in test_list_of_user_chosen_mp3s:
-        print(i)
+    test_songs_list = glob.glob(test_directory)
+    test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
+    test_get_random_song = get_random_song(test_list_of_user_chosen_songs)
 
     easygui.msgbox("Program is finished.", "NeedleDrop")
 
@@ -113,13 +111,15 @@ windows_test()
 
 # def linux_test():
 #     test_directory = "/home/musicnate/Music/favs"
-#     test_directory_files = os.listdir(test_directory)
-#     test_user_choice_mp3s = []
 
-#     test_mp3_list = get_all_mp3s(test_directory, test_directory_files)
-#     test_list_of_user_chosen_mp3s = gui_choose_songs(test_mp3_list) ###### USE PREMADE SELECTION ######
-#     test_random_mp3 = get_random_song(test_list_of_user_chosen_mp3s)
-#     print(test_random_mp3)
+#       TRY USING GLOB INSTEAD OF os.listdir()
+#     test_directory_files = os.listdir(test_directory)
+#     test_user_choice_songs = []
+
+#     test_songs_list = get_all_songs(test_directory, test_directory_files)
+#     test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
+#     test_get_random_song = get_random_song(test_list_of_user_chosen_songs)
+#     print(test_get_random_song)
 
 #     test_random_mp3 = "/home/musicnate/Music/favs/20. Signals.mp3"
 #     test_random_time = 124
