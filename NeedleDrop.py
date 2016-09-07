@@ -72,9 +72,9 @@ def get_random_time(mp3_file):
     return time
 
 
-def play_song_at_time(songnumber, songlist):
+def play_song_at_time(song, time):
     if sys.platform == "win32":
-        os.start(songlist[songnumber])
+        os.startfile(song)
     else:
         opener = "open"
         subprocess.call([opener, songlist[songnumber]])
@@ -103,7 +103,10 @@ def windows_test():
     test_directory = "C:/Users/Nathan Mador-House/Music/*.mp3"
     test_songs_list = glob.glob(test_directory)
     test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
-    test_get_random_song = get_random_song(test_list_of_user_chosen_songs)
+    test_random_song = test_list_of_user_chosen_songs[get_random_song(test_list_of_user_chosen_songs)]
+    test_random_time = 124
+    print(test_random_song)
+    play_song_at_time(test_random_song, test_random_time)
 
     easygui.msgbox("Program is finished.", "NeedleDrop")
 
@@ -118,8 +121,8 @@ windows_test()
 
 #     test_songs_list = get_all_songs(test_directory, test_directory_files)
 #     test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
-#     test_get_random_song = get_random_song(test_list_of_user_chosen_songs)
-#     print(test_get_random_song)
+#     test_random_song = get_random_song(test_list_of_user_chosen_songs)
+#     print(test_random_song)
 
 #     test_random_mp3 = "/home/musicnate/Music/favs/20. Signals.mp3"
 #     test_random_time = 124
