@@ -25,6 +25,7 @@ import random
 import easygui
 import sndhdr
 from mutagen.mp3 import MP3
+import glob
 
 
 ###################################################################
@@ -99,23 +100,31 @@ def play_song_at_time(songnumber, songlist):
 
 
 def windows_test():
-#     windows_test_directory = "C:\\Users\\Nathan\ Mador-House\\Music\\Favs\\"
-    easygui.msgbox("Select the songs you would like to study.", "NeedleDrop")
+    test_directory = "C:/Users/Nathan Mador-House/Music/*.mp3"
+    test_mp3_list = glob.glob(test_directory)
+    test_list_of_user_chosen_mp3s = gui_choose_songs(test_mp3_list) ###### USE PREMADE SELECTION ######
+
+    for i in test_list_of_user_chosen_mp3s:
+        print(i)
+
+    easygui.msgbox("Program is finished.", "NeedleDrop")
 
 windows_test()
 
 # def linux_test():
 #     test_directory = "/home/musicnate/Music/favs"
-#     test_directory_files = os.listdir(linux_test_directory)
+#     test_directory_files = os.listdir(test_directory)
 #     test_user_choice_mp3s = []
 
 #     test_mp3_list = get_all_mp3s(test_directory, test_directory_files)
-#     test_list_of_user_chosen_mp3s = gui_choose_songs(test_mp3_list) USE PREMADE SELECTION
+#     test_list_of_user_chosen_mp3s = gui_choose_songs(test_mp3_list) ###### USE PREMADE SELECTION ######
 #     test_random_mp3 = get_random_song(test_list_of_user_chosen_mp3s)
 #     print(test_random_mp3)
 
 #     test_random_mp3 = "/home/musicnate/Music/favs/20. Signals.mp3"
 #     test_random_time = 124
+
+#     easygui.msgbox("Program is finished.", "NeedleDrop")
 
 # test()
 
