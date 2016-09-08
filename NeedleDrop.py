@@ -18,7 +18,7 @@ Index:
 # 1. IMPORTS AND README
 ###################################################################
 
-import os
+# import os # Deprecated in lieu of subprocess and glob
 import sys
 import subprocess
 import random
@@ -74,12 +74,11 @@ def get_random_time(mp3_file):
 
 def play_song_at_time(song, time):
     if sys.platform == "win32":
-        os.startfile(song)
+        subprocess.Popen([r'C:\Program Files (x86)\VideoLAN\VLC\vlc.exe', r'C:/Users/Nathan Mador-House/Music/20. Signals.mp3'])
     else:
         opener = "open"
-        subprocess.call([opener, songlist[songnumber]])
+        subprocess.call([opener, song])
     # vlc.play(songlist[songnumber])
-    pass
 
 ###################################################################
 # 5. MAIN
@@ -131,9 +130,4 @@ windows_test()
 
 # test()
 
-
-# PLAY MUSIC
-# audio = MP3(test_song_path)
-# print(audio.info.length)
-# test_system_string = "os.startfile('test_random_mp3')"
 
