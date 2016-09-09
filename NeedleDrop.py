@@ -18,12 +18,12 @@ Index:
 # 1. IMPORTS AND README
 ###################################################################
 
-# import os # Deprecated in lieu of subprocess and glob
-import easygui
-import random
-from mutagen.mp3 import MP3
 import glob
+import platform
+import random
+import easygui
 import pygame
+from mutagen.mp3 import MP3
 
 
 ###################################################################
@@ -54,8 +54,10 @@ def get_random_song(song_list):
 
 
 # Randomly selects a start time
-def get_random_time(song_length):
+def get_random_time(song):
     """ Get a random time from a song """
+    audio = MP3(song)
+    song_length = audio.info.length
     if song_length > 60:
         time = random.randrange(int(song_length) - 60)
     else:
@@ -72,52 +74,35 @@ def play_song_at_time(song, time):
 # 5. MAIN
 ###################################################################
 
+def main():
+    user_os = platform.system().lower()
+    if user_os == "windows":
+        directory = gui_choose_directory() + "\*.mp3"
+    elif user_os == "linux":
+        directory = gui_choose_directory() + "/*.mp3"
+    elif user_os == "darwin":
+        directory = gui_choose_directory() + "/*.mp3"
+
+    songs_list = get_all_songs(directory)
+    chosen_songs = gui_choose_songs(songs_list)
+    random_song = chosen_songs[get_random_song(chosen_songs)]
+    print(random_song)
+    random_time = get_random_time(random_song)
+    play_song_at_time(random_song, random_time)
+    easygui.msgbox("Program is playing a song.", "NeedleDrop")
+ 
+main()
+
 ###################################################################
 # 6. TESTING
 ###################################################################
 
 # 1. User chooses directory
-# 2. Get list of files from directory
-# 3. Filter list for mp3s
-# 4. User chooses mp3s
-# 5. Random song from user selected
-# 6. Random time
-# 7. Make a system readable string
-# 8. Play song at random time
-
-
-def windows_test():
-    test_directory = "C:/Users/Nathan Mador-House/Music/*.mp3"
-    test_songs_list = get_all_songs(test_directory)
-    test_list_chosen_songs = gui_choose_songs(test_songs_list)
-    test_random_song = test_list_chosen_songs[get_random_song(test_list_chosen_songs)]
-    audio = MP3(test_random_song)
-    test_random_time = get_random_time(audio.info.length)
-    print(test_random_song)
-    print(test_random_time)
-    play_song_at_time(test_random_song, test_random_time)
-
-    easygui.msgbox("Program is finished.", "NeedleDrop")
-
-windows_test()
-
-# def linux_test():
-#     test_directory = "/home/musicnate/Music/favs"
-
-#       TRY USING GLOB INSTEAD OF os.listdir()
-#     test_directory_files = os.listdir(test_directory)
-#     test_user_choice_songs = []
-
-#     test_songs_list = get_all_songs(test_directory, test_directory_files)
-#     test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
-#     test_random_song = get_random_song(test_list_of_user_chosen_songs)
-#     print(test_random_song)
-
-#     test_random_mp3 = "/home/musicnate/Music/favs/20. Signals.mp3"
-#     test_random_time = 124
-
-#     easygui.msgbox("Program is finished.", "NeedleDrop")
-
-# test()
+# 2. Get list of songs from directory
+# 3. User chooses mp3s
+# 4. Random song from user selected
+# 5. Random time
+# 6. Make a system readable string
+# 7. Play song at random time
 
 
