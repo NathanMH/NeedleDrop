@@ -19,13 +19,11 @@ Index:
 ###################################################################
 
 # import os # Deprecated in lieu of subprocess and glob
-import sys
-import subprocess
-import random
 import easygui
-import sndhdr
+import random
 from mutagen.mp3 import MP3
 import glob
+import pygame
 
 
 ###################################################################
@@ -37,16 +35,9 @@ def gui_choose_directory():
     return easygui.diropenbox("Choose Music Folder", "NeedleDrop")
 
 
-def get_all_songs(location, files):
+def get_all_songs(location):
     """ Make a list of all the valid mp3 files available from directory """
-    mp3_list = []
-    for i in range(0, len(files) - 1):
-        if files[i].lower().endswith(".mp3"):
-            mp3_list.append(files[i])
-        elif sndhdr.what(location + files[i]) is not None:
-            mp3_list.append(files[i])
-        else:
-            print("uh oh")
+    mp3_list = glob.glob(location)
     return mp3_list
 
 
@@ -63,22 +54,19 @@ def get_random_song(song_list):
 
 
 # Randomly selects a start time
-def get_random_time(mp3_file):
+def get_random_time(song_length):
     """ Get a random time from a song """
     if song_length > 60:
-        time = random.randrange(song_length - 60)
+        time = random.randrange(int(song_length) - 60)
     else:
         time = random.randrange(song_length)
     return time
 
 
 def play_song_at_time(song, time):
-    if sys.platform == "win32":
-        subprocess.Popen([r'C:\Program Files (x86)\VideoLAN\VLC\vlc.exe', r'C:/Users/Nathan Mador-House/Music/20. Signals.mp3'])
-    else:
-        opener = "open"
-        subprocess.call([opener, song])
-    # vlc.play(songlist[songnumber])
+    pygame.mixer.init()
+    pygame.mixer.music.load(song)
+    pygame.mixer.music.play(1, time)
 
 ###################################################################
 # 5. MAIN
@@ -100,11 +88,13 @@ def play_song_at_time(song, time):
 
 def windows_test():
     test_directory = "C:/Users/Nathan Mador-House/Music/*.mp3"
-    test_songs_list = glob.glob(test_directory)
-    test_list_of_user_chosen_songs = gui_choose_songs(test_songs_list)
-    test_random_song = test_list_of_user_chosen_songs[get_random_song(test_list_of_user_chosen_songs)]
-    test_random_time = 124
+    test_songs_list = get_all_songs(test_directory)
+    test_list_chosen_songs = gui_choose_songs(test_songs_list)
+    test_random_song = test_list_chosen_songs[get_random_song(test_list_chosen_songs)]
+    audio = MP3(test_random_song)
+    test_random_time = get_random_time(audio.info.length)
     print(test_random_song)
+    print(test_random_time)
     play_song_at_time(test_random_song, test_random_time)
 
     easygui.msgbox("Program is finished.", "NeedleDrop")
