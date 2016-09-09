@@ -66,6 +66,7 @@ def get_random_time(song):
 
 
 def play_song_at_time(song, time):
+    """ Play the song with pygame """
     pygame.mixer.init()
     pygame.mixer.music.load(song)
     pygame.mixer.music.play(1, time)
@@ -75,13 +76,14 @@ def play_song_at_time(song, time):
 ###################################################################
 
 def main():
+    """ Main Function """
     user_os = platform.system().lower()
     if user_os == "windows":
-        directory = gui_choose_directory() + "\*.mp3"
+        directory = gui_choose_directory() + r"\*.mp3"
     elif user_os == "linux":
-        directory = gui_choose_directory() + "/*.mp3"
+        directory = gui_choose_directory() + r"/*.mp3"
     elif user_os == "darwin":
-        directory = gui_choose_directory() + "/*.mp3"
+        directory = gui_choose_directory() + r"/*.mp3"
 
     songs_list = get_all_songs(directory)
     chosen_songs = gui_choose_songs(songs_list)
@@ -90,7 +92,6 @@ def main():
     random_time = get_random_time(random_song)
     play_song_at_time(random_song, random_time)
     easygui.msgbox("Program is playing a song.", "NeedleDrop")
- 
 main()
 
 ###################################################################
@@ -104,5 +105,3 @@ main()
 # 5. Random time
 # 6. Make a system readable string
 # 7. Play song at random time
-
-
