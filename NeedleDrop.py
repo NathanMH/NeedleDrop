@@ -22,8 +22,8 @@ import glob
 import platform
 import random
 import easygui
-import pygame
 from mutagen.mp3 import MP3
+import pygame
 
 
 ###################################################################
